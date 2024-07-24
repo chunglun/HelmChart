@@ -1,0 +1,10 @@
+{{- range $jobname, $job := .Values.jobs }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $jobname }}-configmap
+data:
+  test.sh: |
+    {{ .Files.Get "./test.sh" | nindent 4 }}
+{{- end }}

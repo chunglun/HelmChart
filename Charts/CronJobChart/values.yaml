@@ -1,0 +1,26 @@
+jobs:
+  hello-test:
+    image:
+      repository: busybox
+      tag: 1.36.1
+      imagePullPolicy: IfNotPresent
+    schedule: "* * * * *"
+    command: ["/bin/sh", "/etc/config/test.sh"]
+    args:
+      - "-c"
+      - "echo $(date) - hello from $ECHO_VAR"
+    resources:
+      limits:
+        cpu: 50m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 256Mi
+    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 3
+    concurrencyPolicy: Forbid
+    restartPolicy: OnFailure
+    env:
+    - name: ECHO_VAR
+      value: "busybox"
+    file: test.sh
